@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import requests
-
+import send_email
 
 app = Flask(__name__)
 
@@ -29,22 +29,50 @@ def post(blog_id):
     return render_template("post.html", blog=blogs[id_int])
 
 
-@app.route('/contact')
+@app.route('/contact', methods=["GET", "POST"])
 def contact():
-    return render_template("contact.html")
+    if request.method == "GET":
+        return render_template("contact.html", title="Contact Me")
+    else:
+        data = request.form
+        name = data["name"]
+        email = data["email"]
+        phone = data["phone"]
+        message = data["message"]
+        print(f'<h1>Successfully sent your message.</h1>'
+              f'Name: {name}<br>'
+              f'Email: {email}<br>'
+              f'Phone: {phone}<br>'
+              f'Message: {message}<br>')
+        send_email.send_mail_gmail(
+            subject='Message from Web-form',
+            msg_body=f'Name: {name}\n'
+                     f'Email: {email}\n'
+                     f'Phone: {phone}\n'
+                     f'Message: \n{message}'
+        )
+        return render_template("contact.html", title="Successfully sent your message.")
 
 
-@app.route('/form-entry', methods=["POST"])
-def receive_data():
-    name = request.form["name"]
-    email = request.form["email"]
-    phone = request.form["phone"]
-    message = request.form["message"]
-    return f'<h1>Successfully sent your message.</h1>' \
-           f'Name: {name}<br>' \
-           f'Email: {email}<br>' \
-           f'Phone: {phone}<br>' \
-           f'Message: {message}<br>'
+# @app.route('/form-entry', methods=["GET", "POST"])
+# def receive_data():
+#     # name = request.form["name"]
+#     # email = request.form["email"]
+#     # phone = request.form["phone"]
+#     # message = request.form["message"]
+#     data = request.form
+#     # print(data)
+#     # >>> ImmutableMultiDict([('name', 'John'), ('email', 'j@jp.com'), ('phone', ''), ('message', 'Hello')])
+#     name = data["name"]
+#     email = data["email"]
+#     phone = data["phone"]
+#     message = data["message"]
+#
+#     return f'<h1>Successfully sent your message.</h1>' \
+#            f'Name: {name}<br>' \
+#            f'Email: {email}<br>' \
+#            f'Phone: {phone}<br>' \
+#            f'Message: {message}<br>'
 
 
 if __name__ == '__main__':
