@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import requests
 
 
@@ -32,6 +32,19 @@ def post(blog_id):
 @app.route('/contact')
 def contact():
     return render_template("contact.html")
+
+
+@app.route('/form-entry', methods=["POST"])
+def receive_data():
+    name = request.form["name"]
+    email = request.form["email"]
+    phone = request.form["phone"]
+    message = request.form["message"]
+    return f'<h1>Successfully sent your message.</h1>' \
+           f'Name: {name}<br>' \
+           f'Email: {email}<br>' \
+           f'Phone: {phone}<br>' \
+           f'Message: {message}<br>'
 
 
 if __name__ == '__main__':
