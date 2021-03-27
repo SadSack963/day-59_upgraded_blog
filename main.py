@@ -44,7 +44,7 @@ def contact():
               f'Email: {email}<br>'
               f'Phone: {phone}<br>'
               f'Message: {message}<br>')
-        send_email.send_mail_gmail(
+        send_email.send_mail_yahoo(
             subject='Message from Web-form',
             msg_body=f'Name: {name}\n'
                      f'Email: {email}\n'

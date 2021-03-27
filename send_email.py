@@ -21,6 +21,8 @@ def send_mail_yahoo(subject, msg_body):
     YAHOO_PASSWORD = os.getenv("SMTP_YAHOO_PASSWORD")
     YAHOO_RECIPIENT = os.getenv("SMTP_YAHOO_RECIPIENT")
 
+    # This message works 27/03/2021
+
     # Compile email headers
     # Subject is encoded to allow non-ASCII characters (RFC2047)
     message = MIMEMultipart()
@@ -97,7 +99,7 @@ def send_mail_gmail(subject, msg_body):
     GMAIL_PASSWORD = os.getenv("SMTP_GMAIL_PASSWORD")
     GMAIL_RECIPIENT = os.getenv("SMTP_GMAIL_RECIPIENT")
 
-    # # This doesn't work...
+    # # This doesn't work 26/03/2021
     #
     # # Compile email headers
     # # Subject is encoded to allow non-ASCII characters (RFC2047)
@@ -137,7 +139,7 @@ def send_mail_gmail(subject, msg_body):
     # #     img.add_header('Content-Disposition', 'attachment', filename="boxplot.png")
     # #     message.attach(img)
 
-    # This simple message works...
+    # This simple message works 26/03/2021
 
     message = f"From: \"{GMAIL_SENDER}\" <{GMAIL_EMAIL}>\n" \
               f"To: {GMAIL_RECIPIENT}\n" \
